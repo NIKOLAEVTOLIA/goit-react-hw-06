@@ -1,0 +1,29 @@
+.contact {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  margin-left: 20px;
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.iconContainer {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 5px;
+}
+
+.button {
+  border: none;
+  font-size: 12px;
+  width: 60px;
+  border-radius: 4px;
+  background-color: dodgerblue;
+  color: aliceblue;
+}
+
+.button:hover {
+  background-color: cornflowerblue;
+}
