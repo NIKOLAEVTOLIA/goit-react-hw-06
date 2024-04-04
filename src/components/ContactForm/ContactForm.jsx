@@ -1,14 +1,12 @@
-import { useId } from 'react';
-import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import { addContact } from '../../redux/contactsSlice';
 import css from './ContactForm.module.css';
 
-function ContactForm({ onSubmit }) {
-  const initialValues = {
-    name: '',
-    number: '',
-  };
+const ContactForm = () => {
+  const dispatch = useDispatch();
 
   const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -21,38 +19,35 @@ function ContactForm({ onSubmit }) {
       .required('Number is required'),
   });
 
-  const nameId = useId();
-  const numberId = useId();
-
   const handleSubmit = (values, { resetForm }) => {
     const newContact = {
       id: nanoid(),
       name: values.name,
       number: values.number,
     };
-    onSubmit(newContact);
+    dispatch(addContact(newContact));
     resetForm();
   };
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={{ name: '', number: '' }}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
       <Form className={css.form}>
         <div className={css.nameContainer}>
-          <label className={css.field} htmlFor={nameId}>
+          <label className={css.field} htmlFor="name">
             Name
           </label>
-          <Field type="text" id={nameId} name="name" />
+          <Field type="text" id="name" name="name" />
           <ErrorMessage className={css.error} name="name" component="div" />
         </div>
         <div className={css.numberContainer}>
-          <label className={css.field} htmlFor={numberId}>
+          <label className={css.field} htmlFor="number">
             Number
           </label>
-          <Field type="text" id={numberId} name="number" />
+          <Field type="text" id="number" name="number" />
           <ErrorMessage className={css.error} name="number" component="div" />
         </div>
         <button className={css.button} type="submit">
@@ -61,6 +56,6 @@ function ContactForm({ onSubmit }) {
       </Form>
     </Formik>
   );
-}
+};
 
 export default ContactForm;

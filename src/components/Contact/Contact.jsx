@@ -1,13 +1,15 @@
 import { FaPhone } from 'react-icons/fa6';
 import { IoPersonSharp } from 'react-icons/io5';
+import { useDispatch } from 'react-redux';
+import { deleteContact } from '../../redux/contactsSlice';
 import css from './Contact.module.css';
 
-function Contact({ contact, onDeleteContact }) {
-  const { id, name, number } = contact;
+const Contact = ({ contact }) => {
+  const dispatch = useDispatch();
 
-  function handleDelete() {
-    onDeleteContact(id);
-  }
+  const handleDelete = () => {
+    dispatch(deleteContact(contact.id));
+  };
 
   return (
     <li className={css.contact}>
@@ -16,14 +18,14 @@ function Contact({ contact, onDeleteContact }) {
         <IoPersonSharp className={css.iconPerson} size={16} />
       </div>
       <div>
-        <p> {name}</p>
-        <p> {number}</p>
+        <p>{contact.name}</p>
+        <p>{contact.number}</p>
       </div>
       <button className={css.button} onClick={handleDelete}>
         Delete
       </button>
     </li>
   );
-}
+};
 
 export default Contact;

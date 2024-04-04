@@ -1,12 +1,14 @@
-import { useId } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { changeFilter, selectNameFilter } from '../../redux/filtersSlice';
 import css from './SearchBox.module.css';
 
-function SearchBox({ value, onChange }) {
-  const searchId = useId();
+const SearchBox = () => {
+  const dispatch = useDispatch();
+  const value = useSelector(selectNameFilter);
 
   const handleChange = event => {
     const searchTerm = event.target.value;
-    onChange(searchTerm);
+    dispatch(changeFilter(searchTerm));
   };
 
   return (
@@ -16,9 +18,8 @@ function SearchBox({ value, onChange }) {
       placeholder="Search by name"
       value={value}
       onChange={handleChange}
-      id={searchId}
     />
   );
-}
+};
 
 export default SearchBox;
